@@ -1,0 +1,35 @@
+//C-Lab 2, file A
+// Writen by gustaf zach
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "clab2_b.h"
+
+
+int main(){
+  //main function
+  printf("Hej och välkommen till adderaren! \n");
+  char array[500];
+
+  char start [] = "Börja med att ange ett heltal, ";
+  char second [] = "Ange ett andra heltal, ";
+  char n []= "Forsätt med att ange ännu ett heltal, ";
+
+  Node* number1 = getInput(start, NULL, array);
+  Node* number2 = getInput(second, NULL, array);
+  printf("Summan blir: ");
+  Node* sum = adder(number1, number2);
+  PrintNode(sum);
+  printf("\n");
+
+  while (1){
+    Node* newNumber = getInput(n, sum, array);
+    sum = adder(sum, newNumber);
+    printf("Summan blir: ");
+    PrintNode(sum);
+    printf("\n");
+  }
+
+  return 0;
+}
