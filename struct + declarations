@@ -1,0 +1,23 @@
+//C-Lab 2
+// Writen by gustaf zach
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+/*#define GREETING "Hej och välkommen till adderaren. \n"
+#define START "Börja med att ange ett heltal, "
+#define SECOND "Ange ett andra heltal, "
+#define N "Forsätt med att ange ännu ett heltal, "*/
+
+typedef struct _Node {
+    int number;
+    struct _Node* next;
+}Node;
+
+
+Node* getInput(char* message, Node* sumNode, char* array);
+Node* setNodes(char* input);
+void PrintNode(Node* lista);
+void freespace(Node* sumNode);
+Node* adder(Node* number1, Node* number2);
