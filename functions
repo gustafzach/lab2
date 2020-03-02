@@ -1,0 +1,114 @@
+//C-Lab 2, file B
+// Writen by gustaf zach
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "clab2_b.h"
+
+Node* getInput(char* message, Node* sumNode, char* array){
+  //ask the user for a number, shuts down if Q or q
+
+  printf("%s", message);
+  printf("(eller avsluta med Q): ");
+  scanf("%s", array);
+
+  Node* number;
+  if(array[0]=='Q'||array[0]=='q'){
+    if(sumNode!=NULL){
+        freespace(sumNode);
+    }
+    printf("Hejdå!");
+    exit(0);
+  }
+  else{
+    number = setNodes(array);
+  }
+  return number;
+}
+
+
+Node* setNodes(char* input){
+  //converts the number into a reveresed linked list of nodes
+
+  int size = strlen(input);
+  Node* head = (Node*)malloc(sizeof(Node));
+  head->number = (int)(input[size-1]-'0');
+  head->next = NULL;
+  Node* current = head;
+  for(int i = size-2; i>=0; i--){
+    current->next = (Node*)malloc(sizeof(Node));
+    current = current->next;
+    current->number = (int)(input[i]-'0');
+    current->next = NULL;
+  }
+  return head;
+}
+
+
+Node* adder(Node* node1, Node* node2){
+  //add the elements of two linked lists
+
+  int c, s, x, y;
+
+  Node* result = (Node*)malloc(sizeof(Node));
+  result->number = (node1->number + node2->number)%10;
+  c = (node1->number + node2->number)/10;
+  result->next = NULL;
+
+  Node* curr1 = node1->next;
+  Node* curr2 = node2->next;
+  Node* currResult = result;
+
+  while(curr1||curr2||c==1){
+      if(curr1){
+          x = curr1->number;
+          curr1 = curr1->next;
+      }
+      else{
+          x = 0;
+      }
+      if(curr2){
+          y = curr2->number;
+          curr2 = curr2->next;
+      }
+      else{
+          y = 0;
+      }
+      currResult->next = (Node*)malloc(sizeof(Node));
+      currResult = currResult->next;
+      currResult->next = NULL;
+
+      s = x + y + c;
+      currResult->number = s%10;
+      c = (s-(s%10))/10;
+  }
+  freespace(node1);
+  freespace(node2);
+
+return result;
+}
+
+
+void PrintNode(Node* lista){
+  // Print the data of a linked list in reversed order (back to right order)
+
+      if(lista){
+          PrintNode(lista->next);
+          printf("%d", lista->number);
+      }
+      else{
+        return;
+      }
+}
+
+
+void freespace(Node* sumNode){
+  // deletes the memory of the pointer
+
+    while(sumNode->next != NULL){
+        free(sumNode);
+        sumNode=sumNode->next;
+      }
+    free(sumNode);
+}
